@@ -1,8 +1,6 @@
 ﻿using Application.Dtos;
 using Domain.Entitys;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Interfaces.Mappers
 {
