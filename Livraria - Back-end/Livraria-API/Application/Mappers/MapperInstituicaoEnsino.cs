@@ -14,6 +14,8 @@ namespace Application.Mappers
 
         public InstituicaoEnsino MapperDtoToEntity(InstituicaoEnsinoDto instituicaoEnsinoDto)
         {
+            _mapperEndereco = new MapperEndereco();
+
             var instituicaoEnsino = new InstituicaoEnsino()
             {
                 Id = instituicaoEnsinoDto.Id,
@@ -29,6 +31,8 @@ namespace Application.Mappers
 
         public InstituicaoEnsinoDto MapperEntityToDto(InstituicaoEnsino instituicaoEnsino)
         {
+            _mapperEndereco = new MapperEndereco();
+
             var instituicaoEnsinoDto = new InstituicaoEnsinoDto()
             {
                 Id = instituicaoEnsino.Id,
@@ -44,6 +48,8 @@ namespace Application.Mappers
 
         public IEnumerable<InstituicaoEnsinoDto> MapperListInstituicaoEnsinosDto(IEnumerable<InstituicaoEnsino> instituicaoEnsino)
         {
+            _mapperEndereco = new MapperEndereco();
+
             var dto = instituicaoEnsino.Select(ies => new InstituicaoEnsinoDto
             {
                 Id = ies.Id,
