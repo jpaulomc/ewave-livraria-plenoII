@@ -2,7 +2,6 @@
 using Application.Interfaces;
 using Application.Interfaces.Mappers;
 using Domain.Core.Interfaces.Services;
-using System;
 using System.Collections.Generic;
 
 namespace Application
