@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Application.Interfaces
 {
-    public interface IApplicationServiceEnderecoDto
+    public interface IApplicationServiceEndereco
     {
         void Add(EnderecoDto enderecoDto);
         void Update(EnderecoDto enderecoDto);
