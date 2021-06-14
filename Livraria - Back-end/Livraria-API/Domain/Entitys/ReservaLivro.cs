@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Domain.Entitys
+﻿namespace Domain.Entitys
 {
     public class ReservaLivro : Base
     {
