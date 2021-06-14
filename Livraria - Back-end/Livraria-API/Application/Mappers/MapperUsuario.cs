@@ -20,9 +20,9 @@ namespace Application.Mappers
             {
                 Id = usuarioDto.Id,
                 Nome = usuarioDto.Nome,
-                Endereco = _mapperEndereco.MapperDtoToEntity(usuarioDto.Endereco),
+                Endereco = _mapperEndereco.MapperDtoToEntity(usuarioDto.EnderecoDto),
                 CPF = usuarioDto.CPF,
-                InstituicaoEnsino = _mapperInstituicaoEnsino.MapperDtoToEntity(usuarioDto.InstituicaoEnsino),
+                InstituicaoEnsino = _mapperInstituicaoEnsino.MapperDtoToEntity(usuarioDto.InstituicaoEnsinoDto),
                 Telefone = usuarioDto.Telefone,
                 Email = usuarioDto.Email,
                 Ativo = usuarioDto.Ativo
@@ -40,9 +40,9 @@ namespace Application.Mappers
             {
                 Id = usuario.Id,
                 Nome = usuario.Nome,
-                Endereco = _mapperEndereco.MapperEntityToDto(usuario.Endereco),
+                EnderecoDto = _mapperEndereco.MapperEntityToDto(usuario.Endereco),
                 CPF = usuario.CPF,
-                InstituicaoEnsino = _mapperInstituicaoEnsino.MapperEntityToDto(usuario.InstituicaoEnsino),
+                InstituicaoEnsinoDto = _mapperInstituicaoEnsino.MapperEntityToDto(usuario.InstituicaoEnsino),
                 Telefone = usuario.Telefone,
                 Email = usuario.Email,
                 Ativo = usuario.Ativo
@@ -60,9 +60,9 @@ namespace Application.Mappers
             {
                 Id = u.Id,
                 Nome = u.Nome,
-                Endereco = _mapperEndereco.MapperEntityToDto(u.Endereco),
+                EnderecoDto = _mapperEndereco.MapperEntityToDto(u.Endereco),
                 CPF = u.CPF,
-                InstituicaoEnsino = _mapperInstituicaoEnsino.MapperEntityToDto(u.InstituicaoEnsino),
+                InstituicaoEnsinoDto = _mapperInstituicaoEnsino.MapperEntityToDto(u.InstituicaoEnsino),
                 Telefone = u.Telefone,
                 Email = u.Email,
                 Ativo = u.Ativo

@@ -18,7 +18,7 @@
         public StatusLivroEnum StatusLivro { get; set; }
 
         public Genero Genero { get; set; }
-        public Autor Autor {get;set;}
+        public Autor Autor { get; set; }
 
     }
 }
