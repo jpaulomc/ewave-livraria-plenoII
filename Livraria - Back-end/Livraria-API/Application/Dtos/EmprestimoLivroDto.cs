@@ -2,7 +2,7 @@
 
 namespace Application.Dtos
 {
-    public class EmprestimoLivro
+    public class EmprestimoLivroDto
     {
         public int Id { get; set; }
         public DateTime DataEmprestimo { get; set; }
