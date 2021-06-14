@@ -9,7 +9,7 @@ namespace Application.Dtos
         public DateTime DataPrazoEntrega { get; set; }
         public DateTime DataEntrega { get; set; }
 
-        public LivroDto Livro { get; set; }
-        public UsuarioDto Usuario { get; set; }
+        public LivroDto LivroDto { get; set; }
+        public UsuarioDto UsuarioDto { get; set; }
     }
 }
