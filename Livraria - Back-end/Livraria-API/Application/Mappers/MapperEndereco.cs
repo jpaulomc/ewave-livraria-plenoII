@@ -1,6 +1,8 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.Mappers;
 using Domain.Entitys;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Application.Mappers
 {
@@ -36,6 +38,22 @@ namespace Application.Mappers
             };
 
             return enderecoDto;
+        }
+
+        public IEnumerable<EnderecoDto> MapperListEnderecosDto(IEnumerable<Endereco> endereco)
+        {
+            var enderecos = endereco.Select(e => new EnderecoDto()
+            {
+                Id = e.Id,
+                Logradouro = e.Logradouro,
+                Bairro = e.Bairro,
+                Cidade = e.Cidade,
+                UF = e.UF,
+                Pais = e.Pais,
+                CEP = e.CEP
+            });
+
+            return enderecos;
         }
     }
 }
