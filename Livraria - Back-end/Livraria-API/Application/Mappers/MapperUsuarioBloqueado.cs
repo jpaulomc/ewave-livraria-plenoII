@@ -1,11 +1,10 @@
 ﻿using Application.Dtos;
 using Application.Interfaces.Mappers;
-using Application.Mappers;
 using Domain.Entitys;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Application
+namespace Application.Mappers
 {
     public class MapperUsuarioBloqueado : IMapperUsuarioBloqueado
     {
