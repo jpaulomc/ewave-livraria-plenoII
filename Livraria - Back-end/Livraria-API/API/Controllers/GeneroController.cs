@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -16,15 +17,21 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<GeneroDto>> Get()
         {
-            return Ok(_applicationServiceGenero.GetAll());
+            var listaGenero = _applicationServiceGenero.GetAll();
+            var objJson = JsonConvert.SerializeObject(listaGenero);
+
+            return Ok(objJson);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<GeneroDto> Get(int id)
         {
-            return Ok(_applicationServiceGenero.GetById(id));
+            var genero = _applicationServiceGenero.GetById(id);
+            var objJson = JsonConvert.SerializeObject(genero);
+
+            return Ok(objJson);
         }
 
         [HttpPost]
@@ -38,7 +45,7 @@ namespace API.Controllers
                 }
 
                 _applicationServiceGenero.Add(generoDto);
-                return Ok("Genero Cadastrado com Sucesso!");
+                return Ok("Gênero Cadastrado com Sucesso!");
             }
             catch (Exception ex)
             {
@@ -58,7 +65,7 @@ namespace API.Controllers
                 }
 
                 _applicationServiceGenero.Update(generoDto);
-                return Ok("Genero Alterado com Sucesso!");
+                return Ok("Gênero Alterado com Sucesso!");
             }
             catch (Exception ex)
             {
