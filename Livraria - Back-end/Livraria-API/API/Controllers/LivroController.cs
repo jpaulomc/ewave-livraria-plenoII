@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,13 +27,19 @@ namespace API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<LivroDto>> Get()
         {
-            return Ok(_applicationServiceLivro.GetAll());
+            var listaLivro = _applicationServiceLivro.GetAll();
+            var objJson = JsonConvert.SerializeObject(listaLivro);
+
+            return Ok(objJson);
         }
 
         [HttpGet("{id}")]
         public ActionResult<LivroDto> Get(int id)
         {
-            return Ok(_applicationServiceLivro.GetById(id));
+            var livro = _applicationServiceLivro.GetById(id);
+            var objJson = JsonConvert.SerializeObject(livro);
+
+            return Ok(objJson);
         }
 
         [HttpPost]
