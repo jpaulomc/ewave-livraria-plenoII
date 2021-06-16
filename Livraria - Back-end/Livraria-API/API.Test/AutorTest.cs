@@ -45,7 +45,7 @@ namespace API.Test
         public void CadastrarAutorTest()
         {
             //Arrange
-            var autor = new AutorDto() { Nome = "Santo Tomas de Aquino" };
+            var autor = new AutorDto() { Nome = "Olavo de Carvalho" };
 
             //Act
             IActionResult actionResult = _autorController.Post(autor);
@@ -60,7 +60,7 @@ namespace API.Test
         public void GetAllAutorTest()
         {
             //Arrange
-            ActionResult<IEnumerable<string>> autores;
+            ActionResult<IEnumerable<AutorDto>> autores;
 
             //Act
             autores = _autorController.Get();
@@ -75,8 +75,8 @@ namespace API.Test
         public void GetByIdAutorTest()
         {
             //Arrange
-            int id = 1;
-            ActionResult<string> autor;
+            int id = 2;
+            ActionResult<AutorDto> autor;
 
             //Act
             autor = _autorController.Get(id);

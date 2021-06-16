@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -16,15 +17,21 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<AutorDto>> Get()
         {
-            return Ok(_applicationServiceAutor.GetAll());
+            var listaAutor = _applicationServiceAutor.GetAll();
+            var objJson = JsonConvert.SerializeObject(listaAutor);
+
+            return Ok(objJson);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<AutorDto> Get(int id)
         {
-            return Ok(_applicationServiceAutor.GetById(id));
+            var autor = _applicationServiceAutor.GetById(id);
+            var objJson = JsonConvert.SerializeObject(autor);
+            
+            return Ok(objJson);
         }
 
         [HttpPost]
