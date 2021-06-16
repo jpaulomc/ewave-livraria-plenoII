@@ -12,29 +12,41 @@ namespace Application
     {
         private readonly IServiceEmprestimoLivro _serviceEmprestimoLivro;
         private readonly IMapperEmprestimoLivro _mapperEmprestimoLivro;
+        private readonly IServiceUsuarioBloqueado _serviceUsuarioBloqueado;
 
-        public ApplicationServiceEmprestimoLivro(IServiceEmprestimoLivro serviceEmprestimoLivro, IMapperEmprestimoLivro mapperEmprestimoLivro)
+        public ApplicationServiceEmprestimoLivro(IServiceEmprestimoLivro serviceEmprestimoLivro, IMapperEmprestimoLivro mapperEmprestimoLivro, 
+            IServiceUsuarioBloqueado serviceUsuarioBloqueado)
         {
             _serviceEmprestimoLivro = serviceEmprestimoLivro;
             _mapperEmprestimoLivro = mapperEmprestimoLivro;
+            _serviceUsuarioBloqueado = serviceUsuarioBloqueado;
         }
 
         public void Add(EmprestimoLivroDto emprestimoLivroDto)
         {
             var emprestimoLivro = _mapperEmprestimoLivro.MapperDtoToEntity(emprestimoLivroDto);
 
+
+            //Regra: O Usuário que infringir a regra dos dias fica impossibilitado de emprestar qualquer outro livro até a devolução e só poderá emprestar novamente após 30 dias.
+            var listUsuariosBloqueado = _serviceUsuarioBloqueado.GetAll();
+            var registroUsuarioBloqueado = listUsuariosBloqueado.Where(ub => ub.UsuarioID == emprestimoLivroDto.UsuarioDto.Id && ub.StatusBloqueio);
+
+            if (registroUsuarioBloqueado.Count() > 0)
+                throw new Exception("Usuário impossibilitado de emprestar livros devido atraso em devolução anterior.");
+
+
             //Regra: Todo usuário pode emprestar no maximo 2 livros.
             var listEmprestimoLivro = _serviceEmprestimoLivro.GetAll();
             var emprestimosUsuario = listEmprestimoLivro.Where(e => e.UsuarioID == emprestimoLivroDto.UsuarioDto.Id);
 
             if (emprestimosUsuario.Count() >= 2)
-                throw new System.Exception("Limite de emprestimo excedito, cada usuário pode emprestar até 2 livros.");
+                throw new Exception("Limite de emprestimo excedito, cada usuário pode emprestar até 2 livros.");
 
             //Regra: Todo emprestimo deve ser no maximo de 30 dias para cada livro.
             emprestimoLivro.DataEmprestimo = DateTime.Now;
             emprestimoLivro.DataPrazoEntrega = emprestimoLivro.DataEmprestimo.AddDays(30);
 
-            //
+            
 
             _serviceEmprestimoLivro.Add(emprestimoLivro);
         }
