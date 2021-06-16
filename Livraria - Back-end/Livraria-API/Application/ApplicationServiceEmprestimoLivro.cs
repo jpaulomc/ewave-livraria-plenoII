@@ -14,23 +14,33 @@ namespace Application
         private readonly IMapperEmprestimoLivro _mapperEmprestimoLivro;
         private readonly IServiceUsuarioBloqueado _serviceUsuarioBloqueado;
         private readonly IServiceLivro _serviceLivro;
+        private readonly IServiceReservaLivro _serviceReservaLivro;
 
         public ApplicationServiceEmprestimoLivro(IServiceEmprestimoLivro serviceEmprestimoLivro, IMapperEmprestimoLivro mapperEmprestimoLivro, 
-            IServiceUsuarioBloqueado serviceUsuarioBloqueado, IServiceLivro serviceLivro)
+            IServiceUsuarioBloqueado serviceUsuarioBloqueado, IServiceLivro serviceLivro, IServiceReservaLivro serviceReservaLivro)
         {
             _serviceEmprestimoLivro = serviceEmprestimoLivro;
             _mapperEmprestimoLivro = mapperEmprestimoLivro;
             _serviceUsuarioBloqueado = serviceUsuarioBloqueado;
             _serviceLivro = serviceLivro;
+            _serviceReservaLivro = serviceReservaLivro;
         }
 
         public void Add(EmprestimoLivroDto emprestimoLivroDto)
         {
             var emprestimoLivro = _mapperEmprestimoLivro.MapperDtoToEntity(emprestimoLivroDto);
 
+
             //Regra: Livros emprestados deverão estar indisponiveis para outros Usuários.
             if (emprestimoLivro.Livro.StatusLivro == Domain.Entitys.StatusLivroEnum.Emprestado)
                 throw new Exception("Livro impossibilitado de emprestimo, pois já esta emprestado a outro usuário.");
+
+            //Regra: Permitir reservar livros
+            var reservasLivro = _serviceReservaLivro.GetAll();
+            var registroReservaLivro = reservasLivro.Where(r => r.Livro.Id == emprestimoLivro.Livro.Id && r.Usuario.Id != emprestimoLivro.Usuario.Id && r.Ativa);
+
+            if (registroReservaLivro.Count() > 0)
+                throw new Exception("Livro impossibilitado de emprestimo, pois já esta reservado para outro usuário.");
 
 
             //Regra: O Usuário que infringir a regra dos dias fica impossibilitado de emprestar qualquer outro livro até a devolução e só poderá emprestar novamente após 30 dias.
@@ -54,9 +64,14 @@ namespace Application
 
             _serviceEmprestimoLivro.Add(emprestimoLivro);
 
-            
+            //Alterando o status do Livro para Emprestado
             emprestimoLivro.Livro.StatusLivro = Domain.Entitys.StatusLivroEnum.Emprestado;
             _serviceLivro.Update(emprestimoLivro.Livro);
+
+            //Se havia uma reserva desse livro para esse mesmo usuário, desativar reserva.
+            var registroReservaLivroAtiva = reservasLivro.Where(r => r.Livro.Id == emprestimoLivro.Livro.Id && r.Usuario.Id == emprestimoLivro.Usuario.Id && r.Ativa);
+            if (registroReservaLivroAtiva.Count() > 0)
+                _serviceReservaLivro.Update(registroReservaLivroAtiva.First());
 
         }
 
