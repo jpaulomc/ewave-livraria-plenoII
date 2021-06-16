@@ -6,39 +6,39 @@ using System.Collections.Generic;
 
 namespace API.Controllers
 {
-    public class AutorController : Controller
+    public class GeneroController : Controller
     {
-        private readonly IApplicationServiceAutor _applicationServiceAutor;
+        private readonly IApplicationServiceGenero _applicationServiceGenero;
 
-        public AutorController(IApplicationServiceAutor applicationServiceAutor)
+        public GeneroController(IApplicationServiceGenero applicationServiceGenero)
         {
-            _applicationServiceAutor = applicationServiceAutor;
+            _applicationServiceGenero = applicationServiceGenero;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return Ok(_applicationServiceAutor.GetAll());
+            return Ok(_applicationServiceGenero.GetAll());
         }
 
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return Ok(_applicationServiceAutor.GetById(id));
+            return Ok(_applicationServiceGenero.GetById(id));
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] AutorDto autorDto)
+        public ActionResult Post([FromBody] GeneroDto generoDto)
         {
             try
             {
-                if (autorDto == null)
+                if (generoDto == null)
                 {
                     return NotFound();
                 }
 
-                _applicationServiceAutor.Add(autorDto);
-                return Ok("Autor Cadastrado com Sucesso!");
+                _applicationServiceGenero.Add(generoDto);
+                return Ok("Genero Cadastrado com Sucesso!");
             }
             catch (Exception ex)
             {
@@ -48,17 +48,17 @@ namespace API.Controllers
 
 
         [HttpPut]
-        public ActionResult Update([FromBody] AutorDto autorDto)
+        public ActionResult Update([FromBody] GeneroDto generoDto)
         {
             try
             {
-                if (autorDto == null)
+                if (generoDto == null)
                 {
                     return NotFound();
                 }
 
-                _applicationServiceAutor.Update(autorDto);
-                return Ok("Autor Alterado com Sucesso!");
+                _applicationServiceGenero.Update(generoDto);
+                return Ok("Genero Alterado com Sucesso!");
             }
             catch (Exception ex)
             {
