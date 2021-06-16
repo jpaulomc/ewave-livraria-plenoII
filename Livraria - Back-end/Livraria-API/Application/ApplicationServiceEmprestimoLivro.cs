@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Application.Interfaces.Mappers;
 using Domain.Core.Interfaces.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +30,11 @@ namespace Application
             if (emprestimosUsuario.Count() >= 2)
                 throw new System.Exception("Limite de emprestimo excedito, cada usuário pode emprestar até 2 livros.");
 
+            //Regra: Todo emprestimo deve ser no maximo de 30 dias para cada livro.
+            emprestimoLivro.DataEmprestimo = DateTime.Now;
+            emprestimoLivro.DataPrazoEntrega = emprestimoLivro.DataEmprestimo.AddDays(30);
 
+            //
 
             _serviceEmprestimoLivro.Add(emprestimoLivro);
         }
