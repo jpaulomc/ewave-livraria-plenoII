@@ -17,7 +17,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<InstituicaoEnsinoDto>> Get()
         {
             var listaIes = _applicationServiceInstituicaoEnsino.GetAll();
             var objJson = JsonConvert.SerializeObject(listaIes);
@@ -26,7 +26,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<InstituicaoEnsinoDto> Get(int id)
         {
             var ies = _applicationServiceInstituicaoEnsino.GetById(id);
             var objJson = JsonConvert.SerializeObject(ies);
@@ -35,7 +35,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<string> Post([FromBody] InstituicaoEnsinoDto instituicaoEnsinoDto)
+        public ActionResult Post([FromBody] InstituicaoEnsinoDto instituicaoEnsinoDto)
         {
             try
             {
