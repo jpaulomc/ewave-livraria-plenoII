@@ -13,18 +13,24 @@ namespace Application
         private readonly IServiceEmprestimoLivro _serviceEmprestimoLivro;
         private readonly IMapperEmprestimoLivro _mapperEmprestimoLivro;
         private readonly IServiceUsuarioBloqueado _serviceUsuarioBloqueado;
+        private readonly IServiceLivro _serviceLivro;
 
         public ApplicationServiceEmprestimoLivro(IServiceEmprestimoLivro serviceEmprestimoLivro, IMapperEmprestimoLivro mapperEmprestimoLivro, 
-            IServiceUsuarioBloqueado serviceUsuarioBloqueado)
+            IServiceUsuarioBloqueado serviceUsuarioBloqueado, IServiceLivro serviceLivro)
         {
             _serviceEmprestimoLivro = serviceEmprestimoLivro;
             _mapperEmprestimoLivro = mapperEmprestimoLivro;
             _serviceUsuarioBloqueado = serviceUsuarioBloqueado;
+            _serviceLivro = serviceLivro;
         }
 
         public void Add(EmprestimoLivroDto emprestimoLivroDto)
         {
             var emprestimoLivro = _mapperEmprestimoLivro.MapperDtoToEntity(emprestimoLivroDto);
+
+            //Regra: Livros emprestados deverão estar indisponiveis para outros Usuários.
+            if (emprestimoLivro.Livro.StatusLivro == Domain.Entitys.StatusLivroEnum.Emprestado)
+                throw new Exception("Livro impossibilitado de emprestimo, pois já esta emprestado a outro usuário.");
 
 
             //Regra: O Usuário que infringir a regra dos dias fica impossibilitado de emprestar qualquer outro livro até a devolução e só poderá emprestar novamente após 30 dias.
@@ -46,9 +52,12 @@ namespace Application
             emprestimoLivro.DataEmprestimo = DateTime.Now;
             emprestimoLivro.DataPrazoEntrega = emprestimoLivro.DataEmprestimo.AddDays(30);
 
-            
-
             _serviceEmprestimoLivro.Add(emprestimoLivro);
+
+            
+            emprestimoLivro.Livro.StatusLivro = Domain.Entitys.StatusLivroEnum.Emprestado;
+            _serviceLivro.Update(emprestimoLivro.Livro);
+
         }
 
         public IEnumerable<EmprestimoLivroDto> GetAll()
