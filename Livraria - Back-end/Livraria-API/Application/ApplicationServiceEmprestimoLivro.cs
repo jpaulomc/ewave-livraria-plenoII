@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Application.Interfaces.Mappers;
 using Domain.Core.Interfaces.Services;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Application
 {
@@ -20,6 +21,16 @@ namespace Application
         public void Add(EmprestimoLivroDto emprestimoLivroDto)
         {
             var emprestimoLivro = _mapperEmprestimoLivro.MapperDtoToEntity(emprestimoLivroDto);
+
+            //Regra: Todo usuário pode emprestar no maximo 2 livros.
+            var listEmprestimoLivro = _serviceEmprestimoLivro.GetAll();
+            var emprestimosUsuario = listEmprestimoLivro.Where(e => e.UsuarioID == emprestimoLivroDto.UsuarioDto.Id);
+
+            if (emprestimosUsuario.Count() >= 2)
+                throw new System.Exception("Limite de emprestimo excedito, cada usuário pode emprestar até 2 livros.");
+
+
+
             _serviceEmprestimoLivro.Add(emprestimoLivro);
         }
 
