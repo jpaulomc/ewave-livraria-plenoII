@@ -17,8 +17,9 @@ namespace Application.Mappers
             var instituicaoEnsino = new InstituicaoEnsino()
             {
                 Id = instituicaoEnsinoDto.Id,
+                EnderecoID = instituicaoEnsinoDto.EnderecoDto.Id,
                 Nome = instituicaoEnsinoDto.Nome,
-                Endereco = _mapperEndereco.MapperDtoToEntity(instituicaoEnsinoDto.Endereco),
+                Endereco = _mapperEndereco.MapperDtoToEntity(instituicaoEnsinoDto.EnderecoDto),
                 CNPJ = instituicaoEnsinoDto.CNPJ,
                 Telefone = instituicaoEnsinoDto.Telefone,
                 Ativo = instituicaoEnsinoDto.Ativo
@@ -34,8 +35,9 @@ namespace Application.Mappers
             var instituicaoEnsinoDto = new InstituicaoEnsinoDto()
             {
                 Id = instituicaoEnsino.Id,
+                EnderecoID = instituicaoEnsino.Endereco.Id,
                 Nome = instituicaoEnsino.Nome,
-                Endereco = _mapperEndereco.MapperEntityToDto(instituicaoEnsino.Endereco),
+                EnderecoDto = _mapperEndereco.MapperEntityToDto(instituicaoEnsino.Endereco),
                 CNPJ = instituicaoEnsino.CNPJ,
                 Telefone = instituicaoEnsino.Telefone,
                 Ativo = instituicaoEnsino.Ativo
@@ -51,8 +53,9 @@ namespace Application.Mappers
             var dto = instituicaoEnsino.Select(ies => new InstituicaoEnsinoDto
             {
                 Id = ies.Id,
+                EnderecoID = ies.EnderecoID,
                 Nome = ies.Nome,
-                Endereco = _mapperEndereco.MapperEntityToDto(ies.Endereco),
+                EnderecoDto = _mapperEndereco.MapperEntityToDto(ies.Endereco),
                 CNPJ = ies.CNPJ,
                 Telefone = ies.Telefone,
                 Ativo = ies.Ativo
