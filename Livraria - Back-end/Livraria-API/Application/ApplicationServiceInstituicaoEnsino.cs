@@ -10,11 +10,14 @@ namespace Application
     {
         private readonly IServiceInstituicaoEnsino _serviceInstituicaoEnsino;
         private readonly IMapperInstituicaoEnsino _mapperInstituicaoEnsino;
+        private readonly IServiceEndereco _serviceEndereco;
 
-        public ApplicationServiceInstituicaoEnsino(IServiceInstituicaoEnsino serviceInstituicaoEnsino, IMapperInstituicaoEnsino mapperInstituicaoEnsino)
+        public ApplicationServiceInstituicaoEnsino(IServiceInstituicaoEnsino serviceInstituicaoEnsino, 
+            IMapperInstituicaoEnsino mapperInstituicaoEnsino, IServiceEndereco serviceEndereco)
         {
             _serviceInstituicaoEnsino = serviceInstituicaoEnsino;
             _mapperInstituicaoEnsino = mapperInstituicaoEnsino;
+            _serviceEndereco = serviceEndereco;
         }
         public void Add(InstituicaoEnsinoDto instituicaoEnsinoDto)
         {
@@ -31,6 +34,7 @@ namespace Application
         public InstituicaoEnsinoDto GetById(int id)
         {
             var ies = _serviceInstituicaoEnsino.GetById(id);
+            ies.Endereco = _serviceEndereco.GetById(ies.EnderecoID);
             return _mapperInstituicaoEnsino.MapperEntityToDto(ies);
         }
 
