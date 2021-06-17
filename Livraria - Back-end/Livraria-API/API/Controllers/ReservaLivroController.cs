@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 namespace API.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class ReservaLivroController : Controller
     {
         private readonly IApplicationServiceReservaLivro _applicationServiceReservaLivro;
