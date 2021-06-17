@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -18,15 +19,21 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<UsuarioDto>> Get()
         {
-            return Ok(_applicationServiceUsuario.GetAll());
+            var usuarios = _applicationServiceUsuario.GetAll();
+            var objJson = JsonConvert.SerializeObject(usuarios);
+
+            return Ok(objJson);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult<UsuarioDto> Get(int id)
         {
-            return Ok(_applicationServiceUsuario.GetById(id));
+            var usuario = _applicationServiceUsuario.GetById(id);
+            var objJson = JsonConvert.SerializeObject(usuario);
+
+            return Ok(objJson);
         }
 
         [HttpPost]
