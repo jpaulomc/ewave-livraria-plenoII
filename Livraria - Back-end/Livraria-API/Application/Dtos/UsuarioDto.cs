@@ -7,6 +7,7 @@
         public int EnderecoID { get; set; }
         public string CPF { get; set; }
         public int InstituicaoEnsinoID { get; set; }
+        public string? InstituicaoEnsino { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
         public bool Ativo { get; set; }
