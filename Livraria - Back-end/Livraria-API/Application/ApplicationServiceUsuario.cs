@@ -10,11 +10,16 @@ namespace Application
     {
         private readonly IServiceUsuario _serviceUsuario;
         private readonly IMapperUsuario _mapperUsuario;
+        private readonly IServiceEndereco _serviceEndereco;
+        private readonly IServiceInstituicaoEnsino _serviceInstituicaoEnsino;
 
-        public ApplicationServiceUsuario(IServiceUsuario serviceUsuario, IMapperUsuario mapperUsuario)
+        public ApplicationServiceUsuario(IServiceUsuario serviceUsuario, IMapperUsuario mapperUsuario,
+            IServiceEndereco serviceEndereco, IServiceInstituicaoEnsino serviceInstituicaoEnsino)
         {
             _serviceUsuario = serviceUsuario;
             _mapperUsuario = mapperUsuario;
+            _serviceEndereco = serviceEndereco;
+            _serviceInstituicaoEnsino = serviceInstituicaoEnsino;
         }
 
         public void Add(UsuarioDto usuarioDto)
@@ -32,6 +37,8 @@ namespace Application
         public UsuarioDto GetById(int id)
         {
             var usuario = _serviceUsuario.GetById(id);
+            usuario.Endereco = _serviceEndereco.GetById(usuario.EnderecoID);
+            usuario.InstituicaoEnsino = _serviceInstituicaoEnsino.GetById(usuario.InstituicaoEnsinoID);
             return _mapperUsuario.MapperEntityToDto(usuario);
         }
 
