@@ -19,7 +19,7 @@ namespace Infraestructure.Data.Repositorys
         public IEnumerable<Usuario> GetAll()
         {
             return _sqlContext.Set<Usuario>().Include(e => e.Endereco)
-                .Include(i => i.InstituicaoEnsino).ToList();
+                .Include(i => i.InstituicaoEnsino.Endereco).ToList();
         }
     }
 }
