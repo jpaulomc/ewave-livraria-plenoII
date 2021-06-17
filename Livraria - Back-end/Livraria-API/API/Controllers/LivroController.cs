@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 
 namespace API.Controllers
 {
@@ -15,13 +16,10 @@ namespace API.Controllers
     public class LivroController : Controller
     {
         private readonly IApplicationServiceLivro _applicationServiceLivro;
-        public static IHostingEnvironment _environment;
 
-
-        public LivroController(IApplicationServiceLivro applicationServiceLivro, IHostingEnvironment environment)
+        public LivroController(IApplicationServiceLivro applicationServiceLivro)
         {
             _applicationServiceLivro = applicationServiceLivro;
-            _environment = environment;
         }
 
         [HttpGet]
@@ -43,25 +41,27 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] LivroDto livroDto, IFormFile file)
+        public ActionResult Post([FromForm] LivroDto livroDto, IFormFile file)
         {
             try
             {
+                
                 if (livroDto == null && file.Length == 0)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    var diretorio = _environment.WebRootPath + "\\CapaLivroImg\\";                    
+                    string path = Directory.GetCurrentDirectory();
+                    var diretorio = path + "\\CapaLivroImg\\";                    
                     
                     //Verificar se o diretorio de imagens já existe
                     if (!Directory.Exists(diretorio))
                     {
-                        Directory.CreateDirectory(_environment.WebRootPath + "\\CapaLivroImg\\");
+                        Directory.CreateDirectory(diretorio);
                     }
 
-                    var arquivoPath = _environment.WebRootPath + "\\CapaLivroImg\\" + file.FileName;
+                    var arquivoPath = diretorio + file.FileName;
 
                     using (FileStream fileStream = System.IO.File.Create(arquivoPath))
                     {
@@ -70,7 +70,7 @@ namespace API.Controllers
                         livroDto.Capa = arquivoPath;
                     }
                 }
-
+                
                 _applicationServiceLivro.Add(livroDto);
                 return Ok("Livro Cadastrado com Sucesso!");
             }
