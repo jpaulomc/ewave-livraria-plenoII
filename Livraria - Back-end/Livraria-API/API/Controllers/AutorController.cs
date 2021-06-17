@@ -7,6 +7,8 @@ using System.Collections.Generic;
 
 namespace API.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class AutorController : Controller
     {
         private readonly IApplicationServiceAutor _applicationServiceAutor;
