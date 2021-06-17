@@ -39,6 +39,7 @@ namespace Application
             var usuario = _serviceUsuario.GetById(id);
             usuario.Endereco = _serviceEndereco.GetById(usuario.EnderecoID);
             usuario.InstituicaoEnsino = _serviceInstituicaoEnsino.GetById(usuario.InstituicaoEnsinoID);
+            usuario.InstituicaoEnsino.Endereco = _serviceEndereco.GetById(usuario.InstituicaoEnsino.EnderecoID);
             return _mapperUsuario.MapperEntityToDto(usuario);
         }
 
