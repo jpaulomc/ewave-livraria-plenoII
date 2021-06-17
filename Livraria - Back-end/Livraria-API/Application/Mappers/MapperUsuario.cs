@@ -20,9 +20,9 @@ namespace Application.Mappers
             {
                 Id = usuarioDto.Id,
                 Nome = usuarioDto.Nome,
-                Endereco = _mapperEndereco.MapperDtoToEntity(usuarioDto.EnderecoDto),
+                EnderecoID = usuarioDto.EnderecoID,
                 CPF = usuarioDto.CPF,
-                InstituicaoEnsino = _mapperInstituicaoEnsino.MapperDtoToEntity(usuarioDto.InstituicaoEnsinoDto),
+                InstituicaoEnsinoID = usuarioDto.InstituicaoEnsinoID,
                 Telefone = usuarioDto.Telefone,
                 Email = usuarioDto.Email,
                 Ativo = usuarioDto.Ativo
@@ -36,13 +36,17 @@ namespace Application.Mappers
             _mapperEndereco = new MapperEndereco();
             _mapperInstituicaoEnsino = new MapperInstituicaoEnsino();
 
+            var enderecoDto = _mapperEndereco.MapperEntityToDto(usuario.Endereco);
+            var instituicaoEnsinoDto = _mapperInstituicaoEnsino.MapperEntityToDto(usuario.InstituicaoEnsino);
+
             var usuarioDto = new UsuarioDto()
             {
                 Id = usuario.Id,
                 Nome = usuario.Nome,
-                EnderecoDto = _mapperEndereco.MapperEntityToDto(usuario.Endereco),
+                EnderecoID = enderecoDto.Id,
                 CPF = usuario.CPF,
-                InstituicaoEnsinoDto = _mapperInstituicaoEnsino.MapperEntityToDto(usuario.InstituicaoEnsino),
+                InstituicaoEnsinoID = instituicaoEnsinoDto.Id,
+                InstituicaoEnsino = instituicaoEnsinoDto.Nome,
                 Telefone = usuario.Telefone,
                 Email = usuario.Email,
                 Ativo = usuario.Ativo
@@ -60,9 +64,10 @@ namespace Application.Mappers
             {
                 Id = u.Id,
                 Nome = u.Nome,
-                EnderecoDto = _mapperEndereco.MapperEntityToDto(u.Endereco),
+                EnderecoID = _mapperEndereco.MapperEntityToDto(u.Endereco).Id,
                 CPF = u.CPF,
-                InstituicaoEnsinoDto = _mapperInstituicaoEnsino.MapperEntityToDto(u.InstituicaoEnsino),
+                InstituicaoEnsinoID = _mapperInstituicaoEnsino.MapperEntityToDto(u.InstituicaoEnsino).Id,
+                InstituicaoEnsino = _mapperInstituicaoEnsino.MapperEntityToDto(u.InstituicaoEnsino).Nome,
                 Telefone = u.Telefone,
                 Email = u.Email,
                 Ativo = u.Ativo
