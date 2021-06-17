@@ -25,7 +25,8 @@ namespace Application.Mappers
                 InstituicaoEnsinoID = usuarioDto.InstituicaoEnsinoID,
                 Telefone = usuarioDto.Telefone,
                 Email = usuarioDto.Email,
-                Ativo = usuarioDto.Ativo
+                Ativo = usuarioDto.Ativo,
+                Endereco = _mapperEndereco.MapperDtoToEntity(usuarioDto.EnderecoDto)
             };
 
             return usuario;
@@ -49,7 +50,8 @@ namespace Application.Mappers
                 InstituicaoEnsino = instituicaoEnsinoDto.Nome,
                 Telefone = usuario.Telefone,
                 Email = usuario.Email,
-                Ativo = usuario.Ativo
+                Ativo = usuario.Ativo,
+                EnderecoDto = enderecoDto
             };
 
             return usuarioDto;
@@ -70,7 +72,8 @@ namespace Application.Mappers
                 InstituicaoEnsino = _mapperInstituicaoEnsino.MapperEntityToDto(u.InstituicaoEnsino).Nome,
                 Telefone = u.Telefone,
                 Email = u.Email,
-                Ativo = u.Ativo
+                Ativo = u.Ativo,
+                EnderecoDto = _mapperEndereco.MapperEntityToDto(u.Endereco)
             });
 
             return dto;
