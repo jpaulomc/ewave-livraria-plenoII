@@ -19,12 +19,13 @@ namespace Application.Mappers
             var livro = new Livro()
             {
                 Id = livroDto.Id,
+                GeneroID = livroDto.GeneroID,
+                AutorID = livroDto.AutorID,
                 Titulo = livroDto.Titulo,
-                Genero = _mapperGenero.MapperDtoToEntity(livroDto.GeneroDto),
-                Autor = _mapperAutor.MapperDtoToEntity(livroDto.AutorDto),
                 Sinopse = livroDto.Sinopse,
                 Capa = livroDto.Capa,
-                Ativo = livroDto.Ativo
+                Ativo = livroDto.Ativo,
+                StatusLivro = livroDto.StatusLivro
             };
 
             return livro;
@@ -35,15 +36,21 @@ namespace Application.Mappers
             _mapperAutor = new MapperAutor();
             _mapperGenero = new MapperGenero();
 
+            var generoDto = _mapperGenero.MapperEntityToDto(livro.Genero);
+            var autorDto = _mapperAutor.MapperEntityToDto(livro.Autor);
+
             var livroDto = new LivroDto()
             {
                 Id = livro.Id,
+                GeneroID = generoDto.Id,
+                GeneroDescricao = generoDto.Descricao,
+                AutorID = autorDto.Id,
+                AutorNome = autorDto.Nome,
                 Titulo = livro.Titulo,
-                GeneroDto = _mapperGenero.MapperEntityToDto(livro.Genero),
-                AutorDto = _mapperAutor.MapperEntityToDto(livro.Autor),
                 Sinopse = livro.Sinopse,
                 Capa = livro.Capa,
-                Ativo = livro.Ativo
+                Ativo = livro.Ativo,
+                StatusLivro = livro.StatusLivro
             };
 
             return livroDto;
@@ -57,12 +64,15 @@ namespace Application.Mappers
             var dto = livro.Select(l => new LivroDto
             {
                 Id = l.Id,
+                GeneroID = _mapperGenero.MapperEntityToDto(l.Genero).Id,
+                GeneroDescricao = _mapperGenero.MapperEntityToDto(l.Genero).Descricao,
+                AutorID = _mapperAutor.MapperEntityToDto(l.Autor).Id,
+                AutorNome = _mapperAutor.MapperEntityToDto(l.Autor).Nome,
                 Titulo = l.Titulo,
-                GeneroDto = _mapperGenero.MapperEntityToDto(l.Genero),
-                AutorDto = _mapperAutor.MapperEntityToDto(l.Autor),
                 Sinopse = l.Sinopse,
                 Capa = l.Capa,
-                Ativo = l.Ativo
+                Ativo = l.Ativo,
+                StatusLivro = l.StatusLivro
             });
 
             return dto;
