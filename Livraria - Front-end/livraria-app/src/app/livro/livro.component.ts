@@ -1,4 +1,6 @@
+import { LivroService } from './../livro.service';
 import { Component, OnInit } from '@angular/core';
+import { Livro } from '../models/livro.model';
 
 @Component({
   selector: 'app-livro',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LivroComponent implements OnInit {
 
-  constructor() { }
+  livros: any[] = [];
+
+  constructor(private service: LivroService) { }
 
   ngOnInit(): void {
+    this.service.getAllLivros().subscribe((livros: Livro[]) => {
+      console.table(livros);
+      this.livros = livros;
+    })
   }
 
 }

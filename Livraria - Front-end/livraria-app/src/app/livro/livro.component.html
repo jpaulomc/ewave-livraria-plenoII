@@ -1,1 +1,34 @@
-<p>livro works!</p>
+<section class="container">
+  <h2 class="titulo">Acervo de Livros</h2>
+  <table class="tabela">
+    <thead>
+      <th class="tabela__cabecalho">Ação</th>
+      <th class="tabela__cabecalho">Código</th>
+      <th class="tabela__cabecalho">Titulo</th>
+      <th class="tabela__cabecalho">Gênero</th>
+      <th class="tabela__cabecalho">Autor</th>
+      <th class="tabela__cabecalho">Ativo</th>
+      <th class="tabela__cabecalho">StatusLivro</th>
+
+    </thead>
+    <tbody *ngIf="livros != []; else listaVazia">
+      <tr class="tabela__linha" *ngFor="let livro of livros">
+        <td class="tabela_conteudo"><button>Ações</button></td>
+        <td class="tabela_conteudo">{{ livro.Id }}</td>
+        <td class="tabela_conteudo">{{ livro.Titulo }}</td>
+        <td class="tabela_conteudo">{{ livro.GeneroDescricao }}</td>
+        <td class="tabela_conteudo">{{ livro.AutorNome }}</td>
+        <td class="tabela_conteudo">{{ livro.Ativo }}</td>
+        <td class="tabela_conteudo">{{ livro.StatusLivro }}</td>
+      </tr>
+    </tbody>
+    <ng-template #listaVazia>
+      <p>Nenhum Livro Cadastrado</p>
+    </ng-template>
+  </table>
+</section>
+
+
+
+
+
