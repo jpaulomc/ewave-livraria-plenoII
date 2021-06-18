@@ -6,11 +6,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LivroComponent } from './livro/livro.component';
+import { LivroNovoComponent } from './livro-novo/livro-novo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LivroComponent
+    LivroComponent,
+    LivroNovoComponent
   ],
   imports: [
     BrowserModule,
