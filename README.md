@@ -18,6 +18,8 @@ O que eu pretendia: entregar todos os cruds funcionais no front-end, e realizar 
  - Livro
  - ReservaLivro
  - Usuario
+
+
 Todos estes com os devidos verbos: GET, POST e PUT.
 
 As regras foram implementadas conforme solicitado no readme do desafio.
