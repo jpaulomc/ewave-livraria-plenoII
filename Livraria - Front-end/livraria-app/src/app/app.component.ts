@@ -1,4 +1,4 @@
-import { LivroService } from './livro.service';
+
 import { Component } from '@angular/core';
 
 @Component({
@@ -11,7 +11,7 @@ export class AppComponent {
 
   livros: any[] = [];
 
-  constructor(private service: LivroService) {}
+  constructor() {}
 
 
 }
